@@ -46,7 +46,10 @@
     "roots/wp-config": "1.0.0",
     "koodimonni/composer-dropin-installer": "dev-master",
     "koodimonni-language/core-pt_PT": "*",
-    "koodimonni-language/pt_PT": "*"
+    "koodimonni-language/pt_PT": "*",
+    "wpackagist-plugin/types":"2.3.3",
+    "wpackagist-plugin/wordpress-seo":"8.2",
+    "wpackagist-plugin/smart-marketing-for-wp":"2.3.4"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2",
