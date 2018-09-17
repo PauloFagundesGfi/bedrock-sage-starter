@@ -107,4 +107,3 @@ if (!defined('ABSPATH')) {
 
 define('FORCE_SSL_ADMIN', true);
 define('FORCE_SSL_LOGIN', true);
-add_filter('force_ssl' , '__return_true');
