@@ -96,11 +96,8 @@ selectNodeVersion () {
 
 runComposerTheme(){
 	if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/composer.json" ]; then
-	  cd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
-	  cd $(dirname $DEPLOYMENT_TARGET/web/app/themes/sns24)
-	#  eval "$DEPLOYMENT_TARGET/web/app/themes/sns24"
-	#  echo "php composer.phar --working-dir=$DEPLOYMENT_TARGET/web/app/themes/sns24 install"
-	  eval php $DEPLOYMENT_TARGET/web/app/themes/sns24/composer.phar --working-dir=$DEPLOYMENT_TARGET/web/app/themes/sns24 install
+	  cd "$DEPLOYMENT_TARGET"
+	  eval php composer.phar --working-dir=./web/app/themes/sns24 install
 	  exitWithMessageOnError "composer failed"
 	  cd - > /dev/null
 	fi
