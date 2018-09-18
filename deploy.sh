@@ -98,7 +98,17 @@ exitWithMessageOnError "Missing composer executable"
 # 3. Initialize Composer Config
 initializeDeploymentConfig
 
-# 4. Use composer
+# 4. Use composer for theme
+echo "$DEPLOYMENT_TARGET"
+if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/composer.json" ]; then
+  echo "Found composer.json for Theme"
+  pushd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
+  composer install -d="$DEPLOYMENT_TARGET/web/app/themes/sns24" #$COMPOSER_ARGS 
+  exitWithMessageOnError "Composer install failed"
+  popd
+fi
+
+# 5. Use composer
 echo "$DEPLOYMENT_TARGET"
 if [ -e "$DEPLOYMENT_TARGET/composer.json" ]; then
   echo "Found composer.json"
@@ -108,14 +118,5 @@ if [ -e "$DEPLOYMENT_TARGET/composer.json" ]; then
   popd
 fi
 
-# 5. Use composer for theme
-echo "$DEPLOYMENT_TARGET"
-if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/composer.json" ]; then
-  echo "Found composer.json for Theme"
-  pushd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
-  composer install #$COMPOSER_ARGS 
-  exitWithMessageOnError "Composer install failed"
-  popd
-fi
 ##################################################################################################################################
 echo "Finished successfully."
