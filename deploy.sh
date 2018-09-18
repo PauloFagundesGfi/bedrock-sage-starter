@@ -114,7 +114,7 @@ eval $DEPLOYMENT_TARGET
 # 3. Install NPM packages
 if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
   cd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
-  eval $NPM_CMD install --production
+  eval $NPM_CMD install
   exitWithMessageOnError "npm failed"
   cd - > /dev/null
 fi
