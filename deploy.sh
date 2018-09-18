@@ -122,7 +122,7 @@ fi
 # 4. Buil WebPack
 if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
   cd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
-  eval $NPM_CMD npm run-script build:production
+  eval $NPM_CMD run-script build:production
   exitWithMessageOnError "WebPack failed"
   cd - > /dev/null
 fi
