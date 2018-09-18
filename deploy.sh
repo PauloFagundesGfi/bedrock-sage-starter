@@ -109,6 +109,8 @@ fi
 # 2. Select node version
 selectNodeVersion
 
+eval $DEPLOYMENT_TARGET
+
 # 3. Install NPM packages
 if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd "$DEPLOYMENT_TARGET"
