@@ -109,8 +109,6 @@ fi
 # 2. Select node version
 selectNodeVersion
 
-eval $DEPLOYMENT_TARGET
-
 # 3. Install NPM packages
 if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
   cd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
@@ -119,12 +117,13 @@ if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
   cd - > /dev/null
 fi
 
-# 3. Install Composer modules 
+# 4. Install Composer modules 
 if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/composer.json" ]; then
   cd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
+  pwd
 #  eval "$DEPLOYMENT_TARGET/web/app/themes/sns24"
 #  echo "php composer.phar --working-dir=$DEPLOYMENT_TARGET/web/app/themes/sns24 install"
-  eval php composer.phar install
+#  composer.phar install
   exitWithMessageOnError "composer failed"
   cd - > /dev/null
 fi
