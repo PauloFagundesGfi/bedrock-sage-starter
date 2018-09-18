@@ -113,7 +113,7 @@ eval $DEPLOYMENT_TARGET
 
 # 3. Install NPM packages
 if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
-  cd "$DEPLOYMENT_TARGET"
+  cd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
   eval $NPM_CMD install --production
   exitWithMessageOnError "npm failed"
   cd - > /dev/null
@@ -121,7 +121,7 @@ fi
 
 # 4. Buil WebPack
 if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
-  cd "$DEPLOYMENT_TARGET"
+  cd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
   eval $NPM_CMD npm run-script build:production
   exitWithMessageOnError "WebPack failed"
   cd - > /dev/null
@@ -129,7 +129,7 @@ fi
 
 # 5. Install Composer modules 
 if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/composer.json" ]; then
-  cd "$DEPLOYMENT_TARGET"
+  cd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
   eval php composer.phar install
   exitWithMessageOnError "composer failed"
   cd - > /dev/null
