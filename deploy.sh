@@ -44,7 +44,7 @@ if [[ ! -n "$NEXT_MANIFEST_PATH" ]]; then
 fi
 
 if [[ ! -n "$DEPLOYMENT_TARGET" ]]; then
-  DEPLOYMENT_TARGET=$ARTIFACTS/wwwroot/web/app/themes/sns24
+  DEPLOYMENT_TARGET=$ARTIFACTS/wwwroot
 else
   KUDU_SERVICE=true
 fi
@@ -112,7 +112,7 @@ selectNodeVersion
 eval $DEPLOYMENT_TARGET
 
 # 3. Install NPM packages
-if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
+if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
   cd "$DEPLOYMENT_TARGET"
   eval $NPM_CMD install --production
   exitWithMessageOnError "npm failed"
@@ -120,7 +120,7 @@ if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
 fi
 
 # 4. Buil WebPack
-if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
+if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
   cd "$DEPLOYMENT_TARGET"
   eval $NPM_CMD npm run-script build:production
   exitWithMessageOnError "WebPack failed"
@@ -128,7 +128,7 @@ if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
 fi
 
 # 5. Install Composer modules 
-if [ -e "$DEPLOYMENT_TARGET/composer.json" ]; then
+if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/composer.json" ]; then
   cd "$DEPLOYMENT_TARGET"
   eval php composer.phar install
   exitWithMessageOnError "composer failed"
