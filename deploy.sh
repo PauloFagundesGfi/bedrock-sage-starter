@@ -112,8 +112,8 @@ fi
 echo "$DEPLOYMENT_TARGET"
 if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/composer.json" ]; then
   echo "Found composer.json for Theme"
-  pushd "$DEPLOYMENT_TARGET/web/app/themes/sns24/"
-  composer install #$COMPOSER_ARGS
+  pushd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
+  composer install -d=./web/app/themes/sns24 #$COMPOSER_ARGS 
   exitWithMessageOnError "Composer install failed"
   popd
 fi
