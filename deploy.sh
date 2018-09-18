@@ -97,6 +97,7 @@ selectNodeVersion () {
 runComposerTheme(){
 	if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/composer.json" ]; then
 	  cd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
+	  cd $(dirname $DEPLOYMENT_TARGET/web/app/themes/sns24)
 	#  eval "$DEPLOYMENT_TARGET/web/app/themes/sns24"
 	#  echo "php composer.phar --working-dir=$DEPLOYMENT_TARGET/web/app/themes/sns24 install"
 	  eval php $DEPLOYMENT_TARGET/web/app/themes/sns24/composer.phar --working-dir=$DEPLOYMENT_TARGET/web/app/themes/sns24 install
@@ -127,10 +128,7 @@ if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
   cd - > /dev/null
 fi
 
-# 4. Install Composer modules 
-runComposerTheme	
-
-# 5. Buil WebPack
+# 4. Buil WebPack
 if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
   cd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
   eval $NPM_CMD run-script build:production
@@ -138,6 +136,8 @@ if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
   cd - > /dev/null
 fi
 
+# 5. Install Composer modules 
+runComposerTheme	
 
 ##################################################################################################################################
 
