@@ -123,7 +123,7 @@ if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/composer.json" ]; then
   pwd
 #  eval "$DEPLOYMENT_TARGET/web/app/themes/sns24"
 #  echo "php composer.phar --working-dir=$DEPLOYMENT_TARGET/web/app/themes/sns24 install"
-  composer.phar install
+  php composer.phar install
   exitWithMessageOnError "composer failed"
   cd - > /dev/null
 fi
