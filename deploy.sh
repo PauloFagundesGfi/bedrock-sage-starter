@@ -99,7 +99,7 @@ runNPMDependencies(){
 	echo "$DEPLOYMENT_TARGET"
 	if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
 	  pushd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
-	  $NPM_CMD install
+	  eval $NPM_CMD install
 	  exitWithMessageOnError "npm failed"
 	  popd
 	fi
@@ -108,7 +108,7 @@ runNPMWebpack(){
 	echo "$DEPLOYMENT_TARGET"
 	if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
 	  pushd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
-	  $NPM_CMD run-script build:production
+	  eval $NPM_CMD run-script build:production
 	  exitWithMessageOnError "WebPack failed"
 	  popd
 	fi
