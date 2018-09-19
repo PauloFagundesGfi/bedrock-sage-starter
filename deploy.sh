@@ -140,6 +140,7 @@ runComposerTheme(){
 	if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/composer.json" ]; then
 	  echo "Found composer.json for Theme"
 	  pushd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
+	  cd "$(dirname "$DEPLOYMENT_TARGET/web/app/themes/sns24")"
 	  composer install #$COMPOSER_ARGS 
 	  exitWithMessageOnError "Composer install failed"
 	  popd
