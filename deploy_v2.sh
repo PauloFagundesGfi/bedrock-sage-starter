@@ -2,7 +2,7 @@
 
 # ----------------------
 # KUDU Deployment Script
-# Version: 0.2.2
+# Version: 1.0.17
 # ----------------------
 
 # Helpers
@@ -21,7 +21,8 @@ exitWithMessageOnError () {
 
 # Verify node.js installed
 hash node 2>/dev/null
-exitWithMessageOnError "Missing node.js executable, please install node.js, if already installed make sure it can be reached from current environment."
+exitWithMessageOnError "Missing node.js executable, please install node.js, if already installed make sure it can be reached from current en
+vironment."
 
 # Setup
 # -----
@@ -93,29 +94,10 @@ selectNodeVersion () {
     NODE_EXE=node
   fi
 }
-# NPM Helpers
-# ------------
-runNPMDependencies(){
-	echo "$DEPLOYMENT_TARGET"
-	if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
-	  pushd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
-	  $NPM_CMD install
-	  exitWithMessageOnError "npm failed"
-	  popd
-	fi
-}
-runNPMWebpack(){
-	echo "$DEPLOYMENT_TARGET"
-	if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
-	  pushd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
-	  $NPM_CMD run-script build:production
-	  exitWithMessageOnError "WebPack failed"
-	  popd
-	fi
-}
 
-# Composer Helpers
-# ------------
+# PHP Helpers
+# -----------
+
 initializeDeploymentConfig() {
   if [ ! -e "$COMPOSER_ARGS" ]; then
     COMPOSER_ARGS="--no-interaction --prefer-dist --optimize-autoloader --no-progress --no-dev --verbose"
@@ -125,35 +107,17 @@ initializeDeploymentConfig() {
   fi
   echo "Composer settings: $COMPOSER_ARGS"
 }
-runComposerRoot(){
-	echo "$DEPLOYMENT_TARGET"
-	if [ -e "$DEPLOYMENT_TARGET/composer.json" ]; then
-	  echo "Found composer.json for Root"
-	  pushd "$DEPLOYMENT_TARGET"
-	  composer install #$COMPOSER_ARGS 
-	  exitWithMessageOnError "Composer install failed"
-	  popd
-	fi
-}
-runComposerTheme(){
-	echo "$DEPLOYMENT_TARGET"
-	if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/composer.json" ]; then
-	  echo "Found composer.json for Theme"
-	  pushd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
-	  composer install #$COMPOSER_ARGS 
-	  exitWithMessageOnError "Composer install failed"
-	  popd
-	fi
-}
+
 ##################################################################################################################################
 # Deployment
 # ----------
 
-echo Handling node.js deployment.
+echo PHP deployment
 
 # 1. KuduSync
 if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
-  "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
+  "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;
+.deployment;deploy.sh"
   exitWithMessageOnError "Kudu Sync failed"
 fi
 
@@ -164,27 +128,44 @@ exitWithMessageOnError "Missing composer executable"
 # 3. Initialize Composer Config
 initializeDeploymentConfig
 
-# 4. Select node version
-selectNodeVersion
-
-# 5. Install NPM packages
-runNPMDependencies
-
-# 6. Buil WebPack
-runNPMWebpack
-
-# 7. Install Composer modules 
-runComposerTheme
-runComposerRoot
-
-##################################################################################################################################
-
-# Post deployment stub
-if [[ -n "$POST_DEPLOYMENT_ACTION" ]]; then
-  POST_DEPLOYMENT_ACTION=${POST_DEPLOYMENT_ACTION//\"}
-  cd "${POST_DEPLOYMENT_ACTION_DIR%\\*}"
-  "$POST_DEPLOYMENT_ACTION"
-  exitWithMessageOnError "post deployment action failed"
+# 4. Use composer for theme
+echo "$DEPLOYMENT_TARGET"
+if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/composer.json" ]; then
+  echo "Found composer.json for Theme"
+  pushd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
+  composer install #$COMPOSER_ARGS 
+  exitWithMessageOnError "Composer install failed"
+  popd
 fi
 
+# 5. Use composer
+echo "$DEPLOYMENT_TARGET"
+if [ -e "$DEPLOYMENT_TARGET/composer.json" ]; then
+  echo "Found composer.json"
+  pushd "$DEPLOYMENT_TARGET"
+  composer install $COMPOSER_ARGS
+  exitWithMessageOnError "Composer install failed"
+  popd
+fi
+
+# 6. Select node version
+selectNodeVersion
+
+# 7. Install NPM packages
+if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
+  pushd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
+  $NPM_CMD install
+  exitWithMessageOnError "npm failed"
+  popd
+fi
+
+# 8. Buil WebPack
+if [ -e "$DEPLOYMENT_TARGET/web/app/themes/sns24/package.json" ]; then
+  pushd "$DEPLOYMENT_TARGET/web/app/themes/sns24"
+  $NPM_CMD run-script build:production
+  exitWithMessageOnError "WebPack failed"
+  popd
+fi
+
+##################################################################################################################################
 echo "Finished successfully."
