@@ -1,0 +1,8 @@
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^.*$ /web/$1 [NC,L,QSA]
+</IfModule>
+
+# END WordPress
