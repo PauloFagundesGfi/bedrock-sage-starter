@@ -175,8 +175,8 @@ runNPMDependencies
 runNPMWebpack
 
 # 7. Install Composer modules 
-runComposerTheme
-runComposerRoot
+#runComposerTheme
+#runComposerRoot
 
 ##################################################################################################################################
 

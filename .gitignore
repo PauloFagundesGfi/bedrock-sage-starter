@@ -17,7 +17,7 @@ web/.htaccess
 
 # Composer
 composer.lock
-vendor/*
+#vendor/*
 !vendor/.gitkeep
 
 # Created by https://www.gitignore.io/api/linux,macos,windows,netbeans,phpstorm,intellij,visualstudiocode
