@@ -9,7 +9,7 @@
     ]
   },
   "publicPath": "/app/themes/sns24",
-  "devUrl": "sns24.local",
+  "devUrl": "sns24-dev.local",
   "proxyUrl": "http://localhost:3000",
   "cacheBusting": "[name]_[hash:8]",
   "watch": [
