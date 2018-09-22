@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-<h2>Noticias blade</h2>
 @section('content')
   @include('partials.page-header')
 
+<h2>Archive Noticia blade</h2>
   @if (!have_posts())
     <div class="alert alert-warning">
       {{ __('Sorry, no results were found.', 'sage') }}
