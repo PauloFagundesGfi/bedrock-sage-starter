@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-<h2>Noticia blade</h2>
+<h2>Noticias blade</h2>
 @section('content')
   @include('partials.page-header')
 
